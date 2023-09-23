@@ -1,0 +1,19 @@
+{
+  "name": "vanilla-ts-tetris",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "lint": "prettier --write src/",
+    "build": "parcel build src/index.html",
+    "watch": "parcel serve src/index.html"
+  },
+  "author": "decorator-factory",
+  "license": "MPL-2.0",
+  "devDependencies": {
+    "parcel": "^2.9.3",
+    "postcss": "^8.4.30",
+    "prettier": "^3.0.3",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.2.2"
+  }
+}
