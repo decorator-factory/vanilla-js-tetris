@@ -338,11 +338,11 @@ export const main = (root: HTMLElement) => {
     document.addEventListener("keydown", (e) => {
         switch (e.key) {
             case "ArrowDown":
-            case "V":
+            case "v":
                 actions.down()
                 break
             case "ArrowUp":
-            case "R":
+            case "r":
                 actions.rotate()
                 break
             case "ArrowLeft":
