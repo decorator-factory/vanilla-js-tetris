@@ -341,6 +341,11 @@ export const main = (root: HTMLElement) => {
         left: () => tryUpdateTetro((t) => shiftTetro(t, -1, 0)),
         right: () => tryUpdateTetro((t) => shiftTetro(t, 1, 0)),
         down: () => tryUpdateTetro((t) => shiftTetro(t, 0, 1)),
+        drop: () => {
+            for (let i=0; i<ySize; i++) {
+                actions.down()
+            }
+        }
     }
 
     root.focus()
@@ -359,6 +364,10 @@ export const main = (root: HTMLElement) => {
                 break
             case "ArrowRight":
                 actions.right()
+                break
+            case "d":
+                actions.drop()
+                onDrop()
                 break
         }
     })
@@ -431,6 +440,27 @@ export const main = (root: HTMLElement) => {
         }
     }
 
+    const onDrop = () => {
+        if (!currentTetro)
+            return
+
+        tetroDropCooldown = 20
+        const stillFalling = tryUpdateTetro((t) => shiftTetro(t, 0, 1))
+        if (!stillFalling) {
+            let tetroCells = collapseTetro(currentTetro)
+            tetroCells
+                .filter(boundsFilter(xSize, ySize))
+                .forEach(([x, y]) => (boardCells[y][x] = true))
+            if (tetroCells.every(boundsFilter(xSize, ySize))) {
+                clearRows()
+            } else {
+                isGameOver = true
+                console.log("Game over!")
+            }
+            currentTetro = null
+        }
+    }
+
     const tick = () => {
         if (isGameOver) {
             return
@@ -442,21 +472,7 @@ export const main = (root: HTMLElement) => {
             if (currentTetro === null) {
                 currentTetro = spawnTetro(xSize, currentScore)
             } else {
-                tetroDropCooldown = 20
-                const stillFalling = tryUpdateTetro((t) => shiftTetro(t, 0, 1))
-                if (!stillFalling) {
-                    let tetroCells = collapseTetro(currentTetro)
-                    tetroCells
-                        .filter(boundsFilter(xSize, ySize))
-                        .forEach(([x, y]) => (boardCells[y][x] = true))
-                    if (tetroCells.every(boundsFilter(xSize, ySize))) {
-                        clearRows()
-                    } else {
-                        isGameOver = true
-                        console.log("Game over!")
-                    }
-                    currentTetro = null
-                }
+                onDrop()
             }
         }
 
@@ -472,6 +488,7 @@ type Actions = {
     left: () => void
     right: () => void
     down: () => void
+    drop: () => void
 }
 
 const createControls = (actions: Actions) => {
@@ -483,11 +500,12 @@ const createControls = (actions: Actions) => {
     const rightButton = createButton(actions.right, ">")
     const downButton = createButton(actions.down, "V")
     const rotateButton = createButton(actions.rotate, "R")
+    const dropButton = createButton(actions.drop, "D")
 
     rotateButton.classList.add("col-start-2")
     leftButton.classList.add("col-start-1")
 
-    controlsNode.append(rotateButton, leftButton, downButton, rightButton)
+    controlsNode.append(rotateButton, dropButton, leftButton, downButton, rightButton)
 
     return {
         node: controlsNode,
