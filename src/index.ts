@@ -468,7 +468,7 @@ type Actions = {
 const createControls = (actions: Actions) => {
     const controlsNode = document.createElement("div")
     controlsNode.className =
-        "grid grid-cols-3 grid-rows-2 justify-items-stretch w-56 h-32 gap-4"
+        "grid grid-cols-3 grid-rows-2 justify-items-stretch w-40 h-24 gap-2"
 
     const leftButton = createButton(actions.left, "<")
     const rightButton = createButton(actions.right, ">")
@@ -507,7 +507,7 @@ const createTetrisGrid = (xSize: number, ySize: number) => {
         for (let x = 0; x < xSize; x++) {
             const cellNode = document.createElement("div")
             cellNode.className =
-                "w-8 h-8 border border-neutral-600 bg-neutral-500"
+                "w-6 h-6 bg-neutral-500"
             rowNode.appendChild(cellNode)
             row.push(cellNode)
         }
