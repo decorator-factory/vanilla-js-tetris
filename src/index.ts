@@ -255,9 +255,49 @@ const progression: ShapeDef[] = [
         shape: [[0, 0]],
     },
     {
+        // Amongus
+        minScore: 30,
+        weight: 10,
+        shape: amongusShape,
+    },
+    // now this is where the fun begins
+    {
+        // Amongus 2
+        minScore: 40,
+        weight: 30,
+        shape: amongusShape,
+    },
+    {
+        // Short flat bar
+        minScore: 45,
+        weight: 200,
+        shape: withOrigin(
+            [
+                [0, 0],
+                [1, 0],
+                [2, 0],
+                [3, 0],
+            ],
+            [1.5, 0],
+        ),
+    },
+    {
+        // Short flat bar
+        minScore: 45,
+        weight: 100,
+        shape: withOrigin(
+            [
+                [0, 0],
+                [1, 0],
+                [2, 0],
+            ],
+            [1, 0],
+        ),
+    },
+    {
         // F short
-        minScore: 20,
-        weight: 50,
+        minScore: 50,
+        weight: 100,
         shape: withOrigin(
             [
                 [0, 0],
@@ -270,37 +310,6 @@ const progression: ShapeDef[] = [
             [0.5, 1],
         ),
     },
-    {
-        // Amongus
-        minScore: 30,
-        weight: 10,
-        shape: amongusShape,
-    },
-    {
-        // Amongus 2
-        minScore: 40,
-        weight: 30,
-        shape: amongusShape,
-    },
-    {
-        // F long
-        minScore: 50,
-        weight: 30,
-        shape: withOrigin(
-            [
-                [0, 0],
-                [1, 0],
-                [2, 0],
-                [0, 1],
-                [0, 2],
-                [1, 2],
-                [2, 2],
-                [0, 3],
-                [0, 4],
-            ],
-            [1, 2],
-        ),
-    },
 ]
 
 // UI stuff
@@ -308,8 +317,8 @@ const progression: ShapeDef[] = [
 const range = (n: number) => Array.from({ length: n }, (_, i) => i)
 
 export const main = (root: HTMLElement) => {
-    const xSize = 10
-    const ySize = 20
+    const xSize = 12
+    const ySize = 24
 
     const tryUpdateTetro = (update: (t: Tetro) => Tetro) => {
         if (currentTetro === null) return false
@@ -507,7 +516,7 @@ const createTetrisGrid = (xSize: number, ySize: number) => {
         for (let x = 0; x < xSize; x++) {
             const cellNode = document.createElement("div")
             cellNode.className =
-                "w-6 h-6 bg-neutral-500"
+                "w-5 h-5 bg-neutral-500"
             rowNode.appendChild(cellNode)
             row.push(cellNode)
         }
