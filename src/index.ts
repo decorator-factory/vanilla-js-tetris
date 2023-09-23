@@ -342,10 +342,10 @@ export const main = (root: HTMLElement) => {
         right: () => tryUpdateTetro((t) => shiftTetro(t, 1, 0)),
         down: () => tryUpdateTetro((t) => shiftTetro(t, 0, 1)),
         drop: () => {
-            for (let i=0; i<ySize; i++) {
+            for (let i = 0; i < ySize; i++) {
                 actions.down()
             }
-        }
+        },
     }
 
     root.focus()
@@ -441,8 +441,7 @@ export const main = (root: HTMLElement) => {
     }
 
     const onDrop = () => {
-        if (!currentTetro)
-            return
+        if (!currentTetro) return
 
         tetroDropCooldown = 20
         const stillFalling = tryUpdateTetro((t) => shiftTetro(t, 0, 1))
@@ -505,7 +504,13 @@ const createControls = (actions: Actions) => {
     rotateButton.classList.add("col-start-2")
     leftButton.classList.add("col-start-1")
 
-    controlsNode.append(rotateButton, dropButton, leftButton, downButton, rightButton)
+    controlsNode.append(
+        rotateButton,
+        dropButton,
+        leftButton,
+        downButton,
+        rightButton,
+    )
 
     return {
         node: controlsNode,
@@ -533,8 +538,7 @@ const createTetrisGrid = (xSize: number, ySize: number) => {
         rowNode.className = "flex flex-row w-min"
         for (let x = 0; x < xSize; x++) {
             const cellNode = document.createElement("div")
-            cellNode.className =
-                "w-5 h-5 bg-neutral-500"
+            cellNode.className = "w-5 h-5 bg-neutral-500"
             rowNode.appendChild(cellNode)
             row.push(cellNode)
         }
